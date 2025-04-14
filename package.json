@@ -1,17 +1,27 @@
 {
   "name": "twee-dollar",
   "version": "1.0.0",
-  "description": "",
+  "description": "TweeDollar é um projeto em Node.js e TypeScript que monitora a cotação do dólar (USD/BRL) via AwesomeAPI e publica automaticamente atualizações na plataforma X (Twitter).",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch serve.ts"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josevitorsoares/twee-dollar.git"
+  },
+  "author": "José Vitor Soares <josevitorgoncalvessoares@gmail.com>",
+  "license": "Apache License 2.0",
   "packageManager": "pnpm@10.8.0",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.14.1",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "fastify": "^5.3.0",
+    "zod": "^3.24.2"
   }
 }
