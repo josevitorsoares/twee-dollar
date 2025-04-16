@@ -1,5 +1,5 @@
 import type { AxiosInstance } from "axios";
-import type { IHttpClientService } from "src/domain/services/client-http";
+import type { IHttpClientService } from "src/domain/services";
 import type { CustomHttpRequest, CustomHttpResponse } from "src/domain/types";
 
 export class AxiosClientHttpService implements IHttpClientService {
