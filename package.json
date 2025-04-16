@@ -4,6 +4,7 @@
   "description": "TweeDollar é um projeto em Node.js e TypeScript que monitora a cotação do dólar (USD/BRL) via AwesomeAPI e publica automaticamente atualizações na plataforma X (Twitter).",
   "main": "index.js",
   "scripts": {
+    "start": "tsx index.ts",
     "dev": "tsx watch server.ts"
   },
   "keywords": [],
