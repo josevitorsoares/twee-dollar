@@ -15,20 +15,31 @@
     "indentWidth": 2,
     "formatWithErrors": true,
     "lineEnding": "lf",
-    "useEditorconfig": true
+    "useEditorconfig": true,
+    "ignore": ["node_modules", "dist"]
   },
   "organizeImports": {
     "enabled": true
   },
   "linter": {
     "enabled": true,
+    "ignore": ["node_modules", "dist"],
     "rules": {
+      "suspicious": {
+        "useAwait": "error"
+      },
+      "complexity": {
+        "noStaticOnlyClass": "off"
+      },
       "recommended": true
     }
   },
   "javascript": {
     "formatter": {
       "quoteStyle": "single"
+    },
+    "linter": {
+      "enabled": true
     }
   }
 }
