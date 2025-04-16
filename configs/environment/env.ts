@@ -15,8 +15,6 @@ if (result.error) {
 }
 
 const envSchema = z.object({
-  API_PORT: z.coerce.number().default(3333),
-  CRON_EXPRESSION: z.string(),
   TWITTER_APP_KEY: z.string(),
   TWITTER_APP_SECRET: z.string(),
   TWITTER_ACCESS_TOKEN: z.string(),
@@ -32,8 +30,6 @@ const env = envSchema.parse(process.env, {
 });
 
 const {
-  API_PORT,
-  CRON_EXPRESSION,
   EXTERNAL_API,
   IMAGE_DOLLAR_PATH,
   TWITTER_ACCESS_TOKEN,
@@ -43,8 +39,6 @@ const {
 } = env;
 
 export {
-  API_PORT,
-  CRON_EXPRESSION,
   EXTERNAL_API,
   IMAGE_DOLLAR_PATH,
   TWITTER_ACCESS_SECRET,
