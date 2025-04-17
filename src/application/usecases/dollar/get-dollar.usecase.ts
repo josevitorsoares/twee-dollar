@@ -61,7 +61,9 @@ export class GetDollarUseCase implements IGetDollarUseCase {
     if (!dollar) return;
 
     if (!dollar.value) {
-      await this._databaseRepository.update({ id: DOCUMENT_OBJECTID, ...coin });
+      await this._databaseRepository
+        .update({ id: DOCUMENT_OBJECTID, ...coin })
+        .catch((err) => console.log(err));
 
       dollar.value = coin.value;
       dollar.percentageChange = "";
@@ -91,10 +93,12 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         coin.variation = variation.toString();
         coin.percentageChange = percentageChange;
 
-        await this._databaseRepository.update({
-          id: DOCUMENT_OBJECTID,
-          ...coin,
-        });
+        await this._databaseRepository
+          .update({
+            id: DOCUMENT_OBJECTID,
+            ...coin,
+          })
+          .catch((err) => console.log(err));
 
         console.log("tweet enviado - Subiu 😱");
         break;
@@ -121,10 +125,12 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         coin.variation = variation.toString();
         coin.percentageChange = percentageChange;
 
-        await this._databaseRepository.update({
-          id: DOCUMENT_OBJECTID,
-          ...coin,
-        });
+        await this._databaseRepository
+          .update({
+            id: DOCUMENT_OBJECTID,
+            ...coin,
+          })
+          .catch((err) => console.log(err));
 
         console.log("tweet enviado - Caiu 😁");
         break;
