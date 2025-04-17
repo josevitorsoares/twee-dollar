@@ -22,7 +22,7 @@ export class MongoDBRepository implements IDatabaseRepository {
     const database = await getDatabase();
 
     await database.collection("dollar").updateOne(
-      { id: dollar.id },
+      { _id: new ObjectId(dollar.id) },
       {
         $set: {
           value: dollar.value,
