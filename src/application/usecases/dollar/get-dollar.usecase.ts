@@ -1,8 +1,8 @@
-import { EXTERNAL_API } from "configs/environment/env";
+import { DOCUMENT_OBJECTID, EXTERNAL_API } from "configs/environment/env";
 import type {
   DollarEntity,
+  IDatabaseRepository,
   IHttpClientService,
-  IStorageRepository,
   ITwitterRepository,
 } from "src/domain";
 import type { IGetDollarUseCase } from "src/domain/usecases";
@@ -13,7 +13,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
   constructor(
     private readonly _httpClientService: IHttpClientService,
     private readonly _twitterRepository: ITwitterRepository,
-    private readonly _storageRepository: IStorageRepository
+    private readonly _databaseRepository: IDatabaseRepository
   ) {}
 
   private _getAleatoryMessage(
@@ -56,27 +56,25 @@ export class GetDollarUseCase implements IGetDollarUseCase {
 
     const coin = CoinMapper.toDomain(response.body);
 
-    const storedData = this._storageRepository.readStoredData();
+    const dollar = await this._databaseRepository.findById(DOCUMENT_OBJECTID);
 
-    if (!storedData.dollar.value) {
-      this._storageRepository.writeStoredData({
-        dollar: {
-          value: coin.value,
-          percentageChange: "",
-          variation: "",
-          time: coin.time,
-        },
-      });
+    if (!dollar) return;
 
-      storedData.dollar = coin;
+    if (!dollar.value) {
+      await this._databaseRepository.update({ id: DOCUMENT_OBJECTID, ...coin });
+
+      dollar.value = coin.value;
+      dollar.percentageChange = "";
+      dollar.variation = "";
+      dollar.time = coin.time;
     }
 
     switch (true) {
-      case coin.value > storedData.dollar.value: {
-        const variation = Number(coin.value) - Number(storedData.dollar.value);
-        
+      case coin.value > dollar.value: {
+        const variation = Number(coin.value) - Number(dollar.value);
+
         const percentageChange = (
-          (variation / Number(storedData.dollar.value)) *
+          (variation / Number(dollar.value)) *
           100
         ).toFixed(2);
 
@@ -93,20 +91,23 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         coin.variation = variation.toString();
         coin.percentageChange = percentageChange;
 
-        this._storageRepository.writeStoredData({ dollar: coin });
+        await this._databaseRepository.update({
+          id: DOCUMENT_OBJECTID,
+          ...coin,
+        });
 
         console.log("tweet enviado - Subiu 😱");
         break;
       }
 
-      case coin.value < storedData.dollar.value: {
-        const variation = Number(storedData.dollar.value) - Number(coin.value);
+      case coin.value < dollar.value: {
+        const variation = Number(dollar.value) - Number(coin.value);
 
         const percentageChange = (
-          (variation / Number(storedData.dollar.value)) *
+          (variation / Number(dollar.value)) *
           100
         ).toFixed(2);
-        
+
         const message = this._getAleatoryMessage(
           "down",
           coin.value,
@@ -115,12 +116,15 @@ export class GetDollarUseCase implements IGetDollarUseCase {
           percentageChange
         );
 
+        await this._twitterRepository.sendTweet(message);
+
         coin.variation = variation.toString();
         coin.percentageChange = percentageChange;
 
-        await this._twitterRepository.sendTweet(message);
-
-        this._storageRepository.writeStoredData({ dollar: coin });
+        await this._databaseRepository.update({
+          id: DOCUMENT_OBJECTID,
+          ...coin,
+        });
 
         console.log("tweet enviado - Caiu 😁");
         break;

@@ -1,7 +1,7 @@
 import { GetDollarUseCase } from "src/application/usecases/dollar";
 import type { IGetDollarUseCase } from "src/domain/usecases";
 import {
-  makeStorageRepository,
+  makeMongoDBRepository,
   makeTwitterRepository,
 } from "../../repositories";
 import { makeAxiosHttpClientService } from "../../services";
@@ -9,12 +9,12 @@ import { makeAxiosHttpClientService } from "../../services";
 export const makeGetDollarUseCase = (): IGetDollarUseCase => {
   const httpClientService = makeAxiosHttpClientService();
   const tweeterRepository = makeTwitterRepository();
-  const storageRepository = makeStorageRepository();
+  const databaseRepository = makeMongoDBRepository();
 
   const getDollarUseCase = new GetDollarUseCase(
     httpClientService,
     tweeterRepository,
-    storageRepository
+    databaseRepository
   );
 
   return getDollarUseCase;
