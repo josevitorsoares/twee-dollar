@@ -61,14 +61,14 @@ export class GetDollarUseCase implements IGetDollarUseCase {
     if (!dollar) return;
 
     if (!dollar.value) {
-      await this._databaseRepository
-        .update({ id: DOCUMENT_OBJECTID, ...coin })
-        .catch((err) => console.log(err));
-
       dollar.value = coin.value;
       dollar.percentageChange = "";
       dollar.variation = "";
       dollar.time = coin.time;
+
+      await this._databaseRepository
+        .update({ id: DOCUMENT_OBJECTID, ...dollar })
+        .catch((err) => console.log(err));
     }
 
     switch (true) {
