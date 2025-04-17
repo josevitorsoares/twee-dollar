@@ -19,7 +19,7 @@
 - 🔄 Consulta periódica da cotação do dólar via AwesomeAPI
 - 📤 Publicação automática de atualizações na plataforma X (Twitter)
 - ⚙️ Desenvolvido com Node.js e TypeScript
-- ☁️ Hospedagem via Vercel
+- ☁️ Hospedagem via [Render](https://render.com/)
 
 ---
 
@@ -27,7 +27,7 @@
 
 - 🟩 Node.js v18 ou superior
 - 📦 Gerenciador de pacotes [pnpm](https://pnpm.io/)
-- 🔑 Credenciais da API da plataforma X (Twitter)
+- 🔑 Credenciais da API da plataforma [X (Twitter)](https://developer.x.com/en)
 
 ---
 
