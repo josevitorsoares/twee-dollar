@@ -1,49 +1,60 @@
-import { DOLLAR_OBJECTID, EXTERNAL_API } from "configs/environment/env";
+import {
+  DOLLAR_OBJECTID,
+  EXTERNAL_API,
+  PHRASES_OBJECTID,
+} from "configs/environment/env";
 import type {
   DollarEntity,
   IDollarRepository,
   IHttpClientService,
+  IPhraseRepository,
   ITwitterRepository,
+  PhraseOutput,
 } from "src/domain";
 import type { IGetDollarUseCase } from "src/domain/usecases";
 import { CoinMapper } from "src/infrastructure";
-import phrases from "./phrases.json" assert { type: "json" };
 
 export class GetDollarUseCase implements IGetDollarUseCase {
   constructor(
     private readonly _httpClientService: IHttpClientService,
     private readonly _dollarRepository: IDollarRepository,
-    private readonly _twitterRepository: ITwitterRepository
+    private readonly _twitterRepository: ITwitterRepository,
+    private readonly _phraseRepository: IPhraseRepository
   ) {}
 
   private _getAleatoryMessage(
-    dollarStatus: "up" | "down",
-    price: string,
-    time: string,
-    change: string,
-    percent: string
+    phrase: PhraseOutput,
+    dollar: {
+      dollarStatus: "up" | "down";
+      price: string;
+      time: string;
+      change: string;
+      percent: string;
+    }
   ): string {
-    const title = phrases.title;
+    const { change, dollarStatus, percent, price, time } = dollar;
+
+    const title = phrase.title;
 
     const opening =
-      phrases.openings[dollarStatus][
-        Math.floor(Math.random() * phrases.openings[dollarStatus].length)
+      phrase.openings[dollarStatus][
+        Math.floor(Math.random() * phrase.openings[dollarStatus].length)
       ];
 
-    const data = phrases.dataBlocks[
-      Math.floor(Math.random() * phrases.dataBlocks.length)
+    const data = phrase.dataBlocks[
+      Math.floor(Math.random() * phrase.dataBlocks.length)
     ]
       .replace(/\{price\}/g, price)
       .replace(/\{time\}/g, time);
 
-    const variation = phrases.variationBlocks[dollarStatus][
-      Math.floor(Math.random() * phrases.variationBlocks[dollarStatus].length)
+    const variation = phrase.variationBlocks[dollarStatus][
+      Math.floor(Math.random() * phrase.variationBlocks[dollarStatus].length)
     ]
       .replace(/\{change\}/g, change)
       .replace(/\{percent\}/g, percent);
 
     const closing =
-      phrases.closings[Math.floor(Math.random() * phrases.closings.length)];
+      phrase.closings[Math.floor(Math.random() * phrase.closings.length)];
 
     return `${title}\n\n${opening}\n${data}\n${variation}\n${closing}`;
   }
@@ -57,8 +68,9 @@ export class GetDollarUseCase implements IGetDollarUseCase {
     const coin = CoinMapper.toDomain(response.body);
 
     const dollar = await this._dollarRepository.findById(DOLLAR_OBJECTID);
+    const phrase = await this._phraseRepository.findById(PHRASES_OBJECTID);
 
-    if (!dollar) return;
+    if (!dollar || !phrase) return;
 
     if (!dollar.value) {
       dollar.value = coin.value;
@@ -81,11 +93,14 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         ).toFixed(2);
 
         const message = this._getAleatoryMessage(
-          "up",
-          coin.value,
-          coin.time,
-          variation.toString(),
-          percentageChange
+          phrase,
+          {
+            dollarStatus: "up",
+            price: coin.value,
+            time: coin.time,
+            change: variation.toString(),
+            percent: percentageChange,
+          }
         );
 
         await this._twitterRepository.sendTweet(message);
@@ -113,11 +128,14 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         ).toFixed(2);
 
         const message = this._getAleatoryMessage(
-          "down",
-          coin.value,
-          coin.time,
-          variation.toString(),
-          percentageChange
+          phrase,
+          {
+            dollarStatus: "up",
+            price: coin.value,
+            time: coin.time,
+            change: variation.toString(),
+            percent: percentageChange,
+          }
         );
 
         await this._twitterRepository.sendTweet(message);
