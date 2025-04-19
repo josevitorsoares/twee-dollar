@@ -92,16 +92,13 @@ export class GetDollarUseCase implements IGetDollarUseCase {
           100
         ).toFixed(2);
 
-        const message = this._getAleatoryMessage(
-          phrase,
-          {
-            dollarStatus: "up",
-            price: coin.value,
-            time: coin.time,
-            change: variation.toString(),
-            percent: percentageChange,
-          }
-        );
+        const message = this._getAleatoryMessage(phrase, {
+          dollarStatus: "up",
+          price: coin.value,
+          time: coin.time,
+          change: variation.toString(),
+          percent: percentageChange,
+        });
 
         await this._twitterRepository.sendTweet(message);
 
@@ -127,16 +124,13 @@ export class GetDollarUseCase implements IGetDollarUseCase {
           100
         ).toFixed(2);
 
-        const message = this._getAleatoryMessage(
-          phrase,
-          {
-            dollarStatus: "up",
-            price: coin.value,
-            time: coin.time,
-            change: variation.toString(),
-            percent: percentageChange,
-          }
-        );
+        const message = this._getAleatoryMessage(phrase, {
+          dollarStatus: "up",
+          price: coin.value,
+          time: coin.time,
+          change: variation.toString(),
+          percent: percentageChange,
+        });
 
         await this._twitterRepository.sendTweet(message);
 
@@ -157,6 +151,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
       default:
         break;
     }
+    
     const date = new Date();
     console.log(
       `Executado às: ${date.toLocaleTimeString(
