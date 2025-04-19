@@ -1,7 +1,7 @@
 import { DOCUMENT_OBJECTID, EXTERNAL_API } from "configs/environment/env";
 import type {
   DollarEntity,
-  IDatabaseRepository,
+  IDollarRepository,
   IHttpClientService,
   ITwitterRepository,
 } from "src/domain";
@@ -12,8 +12,8 @@ import phrases from "./phrases.json" assert { type: "json" };
 export class GetDollarUseCase implements IGetDollarUseCase {
   constructor(
     private readonly _httpClientService: IHttpClientService,
+    private readonly _dollarRepository: IDollarRepository ,
     private readonly _twitterRepository: ITwitterRepository,
-    private readonly _databaseRepository: IDatabaseRepository
   ) {}
 
   private _getAleatoryMessage(
@@ -56,7 +56,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
 
     const coin = CoinMapper.toDomain(response.body);
 
-    const dollar = await this._databaseRepository.findById(DOCUMENT_OBJECTID);
+    const dollar = await this._dollarRepository.findById(DOCUMENT_OBJECTID);
 
     if (!dollar) return;
 
@@ -66,7 +66,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
       dollar.variation = "";
       dollar.time = coin.time;
 
-      await this._databaseRepository
+      await this._dollarRepository
         .update({ id: DOCUMENT_OBJECTID, ...dollar })
         .catch((err) => console.log(err));
     }
@@ -93,7 +93,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         coin.variation = variation.toString();
         coin.percentageChange = percentageChange;
 
-        await this._databaseRepository
+        await this._dollarRepository
           .update({
             id: DOCUMENT_OBJECTID,
             ...coin,
@@ -125,7 +125,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         coin.variation = variation.toString();
         coin.percentageChange = percentageChange;
 
-        await this._databaseRepository
+        await this._dollarRepository
           .update({
             id: DOCUMENT_OBJECTID,
             ...coin,
