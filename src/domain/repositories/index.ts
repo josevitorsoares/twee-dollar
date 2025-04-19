@@ -1,2 +1,2 @@
-export * from "./database.repository.interface";
+export * from "./dollar.repository.interface";
 export * from "./twitter.repository.interface";
