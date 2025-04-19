@@ -16,3 +16,9 @@ export async function getDatabase() {
 
   return client.db("twee-dollar-atlas-db");
 }
+
+export async function closeDatabase() {
+  await client.close().catch((error) =>
+    console.error("❌ Erro ao fechar a conexão com o MongoDB Atlas:", error)
+  );
+}
