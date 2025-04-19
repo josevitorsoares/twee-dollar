@@ -1,4 +1,4 @@
-import { DOCUMENT_OBJECTID, EXTERNAL_API } from "configs/environment/env";
+import { DOLLAR_OBJECTID, EXTERNAL_API } from "configs/environment/env";
 import type {
   DollarEntity,
   IDollarRepository,
@@ -12,8 +12,8 @@ import phrases from "./phrases.json" assert { type: "json" };
 export class GetDollarUseCase implements IGetDollarUseCase {
   constructor(
     private readonly _httpClientService: IHttpClientService,
-    private readonly _dollarRepository: IDollarRepository ,
-    private readonly _twitterRepository: ITwitterRepository,
+    private readonly _dollarRepository: IDollarRepository,
+    private readonly _twitterRepository: ITwitterRepository
   ) {}
 
   private _getAleatoryMessage(
@@ -56,7 +56,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
 
     const coin = CoinMapper.toDomain(response.body);
 
-    const dollar = await this._dollarRepository.findById(DOCUMENT_OBJECTID);
+    const dollar = await this._dollarRepository.findById(DOLLAR_OBJECTID);
 
     if (!dollar) return;
 
@@ -67,7 +67,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
       dollar.time = coin.time;
 
       await this._dollarRepository
-        .update({ id: DOCUMENT_OBJECTID, ...dollar })
+        .update({ id: DOLLAR_OBJECTID, ...dollar })
         .catch((err) => console.log(err));
     }
 
@@ -95,7 +95,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
 
         await this._dollarRepository
           .update({
-            id: DOCUMENT_OBJECTID,
+            id: DOLLAR_OBJECTID,
             ...coin,
           })
           .catch((err) => console.log(err));
@@ -127,7 +127,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
 
         await this._dollarRepository
           .update({
-            id: DOCUMENT_OBJECTID,
+            id: DOLLAR_OBJECTID,
             ...coin,
           })
           .catch((err) => console.log(err));

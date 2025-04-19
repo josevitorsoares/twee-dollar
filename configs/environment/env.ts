@@ -15,7 +15,7 @@ if (result.error) {
 }
 
 const envSchema = z.object({
-  DOCUMENT_OBJECTID: z.string(),
+  DOLLAR_OBJECTID: z.string(),
   EXTERNAL_API: z.string(),
   IMAGE_DOLLAR_PATH: z.string().default("./assets/images/dollar.jpg"),
   MONGODB_URI: z.string(),
@@ -32,7 +32,7 @@ const env = envSchema.parse(process.env, {
 });
 
 const {
-  DOCUMENT_OBJECTID,
+  DOLLAR_OBJECTID,
   EXTERNAL_API,
   IMAGE_DOLLAR_PATH,
   MONGODB_URI,
@@ -43,7 +43,7 @@ const {
 } = env;
 
 export {
-  DOCUMENT_OBJECTID,
+  DOLLAR_OBJECTID,
   EXTERNAL_API,
   IMAGE_DOLLAR_PATH,
   MONGODB_URI,
