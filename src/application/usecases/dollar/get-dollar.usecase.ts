@@ -79,7 +79,13 @@ export class GetDollarUseCase implements IGetDollarUseCase {
       dollar.time = coin.time;
 
       await this._dollarRepository
-        .update({ id: DOLLAR_OBJECTID, ...dollar })
+        .update({
+          id: DOLLAR_OBJECTID,
+          value: dollar.value,
+          variation: dollar.variation,
+          percentageChange: dollar.percentageChange,
+          time: dollar.time,
+        })
         .catch((err) => console.log(err));
     }
 
@@ -96,7 +102,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
           dollarStatus: "up",
           price: coin.value,
           time: coin.time,
-          change: variation.toString(),
+          change: variation.toFixed(2),
           percent: percentageChange,
         });
 
@@ -128,7 +134,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
           dollarStatus: "up",
           price: coin.value,
           time: coin.time,
-          change: variation.toString(),
+          change: variation.toFixed(2),
           percent: percentageChange,
         });
 
@@ -151,7 +157,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
       default:
         break;
     }
-    
+
     const date = new Date();
     console.log(
       `Executado às: ${date.toLocaleTimeString(
