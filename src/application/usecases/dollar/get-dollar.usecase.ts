@@ -84,13 +84,13 @@ export class GetDollarUseCase implements IGetDollarUseCase {
           "up",
           coin.value,
           coin.time,
-          variation.toString(),
+          variation.toFixed(2),
           percentageChange
         );
 
         await this._twitterRepository.sendTweet(message);
 
-        coin.variation = variation.toString();
+        coin.variation = variation.toFixed(2);
         coin.percentageChange = percentageChange;
 
         this._storageRepository.writeStoredData({ dollar: coin });
@@ -111,11 +111,11 @@ export class GetDollarUseCase implements IGetDollarUseCase {
           "down",
           coin.value,
           coin.time,
-          variation.toString(),
+          variation.toFixed(2),
           percentageChange
         );
 
-        coin.variation = variation.toString();
+        coin.variation = variation.toFixed(2);
         coin.percentageChange = percentageChange;
 
         await this._twitterRepository.sendTweet(message);
