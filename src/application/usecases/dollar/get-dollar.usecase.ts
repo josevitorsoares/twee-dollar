@@ -108,7 +108,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
 
         await this._twitterRepository.sendTweet(message);
 
-        coin.variation = variation.toString();
+        coin.variation = variation.toFixed(2);
         coin.percentageChange = percentageChange;
 
         await this._dollarRepository
@@ -140,7 +140,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
 
         await this._twitterRepository.sendTweet(message);
 
-        coin.variation = variation.toString();
+        coin.variation = variation.toFixed(2);
         coin.percentageChange = percentageChange;
 
         await this._dollarRepository
