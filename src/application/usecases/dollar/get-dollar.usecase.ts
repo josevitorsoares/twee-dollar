@@ -90,7 +90,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
     }
 
     switch (true) {
-      case coin.value > dollar.value: {
+      case Number(coin.value) > Number(dollar.value): {
         const variation = Number(coin.value) - Number(dollar.value);
 
         const percentageChange = (
@@ -122,7 +122,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         break;
       }
 
-      case coin.value < dollar.value: {
+      case Number(coin.value) < Number(dollar.value): {
         const variation = Number(dollar.value) - Number(coin.value);
 
         const percentageChange = (
