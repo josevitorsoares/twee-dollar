@@ -131,7 +131,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
         ).toFixed(2);
 
         const message = this._getAleatoryMessage(phrase, {
-          dollarStatus: "up",
+          dollarStatus: "down",
           price: coin.value,
           time: coin.time,
           change: variation.toFixed(2),
