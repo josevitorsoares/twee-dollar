@@ -1,7 +1,7 @@
 import {
-  API_EXTERNAL_KEY,
   DOLLAR_OBJECTID,
   EXTERNAL_API,
+  EXTERNAL_API_KEY,
   PHRASES_OBJECTID,
 } from "configs/environment/env";
 import type {
@@ -61,13 +61,13 @@ export class GetDollarUseCase implements IGetDollarUseCase {
   }
 
   async execute(): Promise<void> {
-    const externalUrl = `${EXTERNAL_API}?token=${API_EXTERNAL_KEY}`;
+    const externalUrl = `${EXTERNAL_API}?token=${EXTERNAL_API_KEY}`;
 
     const response = await this._httpClientService.request<DollarEntity>({
       method: "get",
       hearers: {
         "Content-Type": "application/json",
-        "x-api-key": `${API_EXTERNAL_KEY}`,
+        "x-api-key": `${EXTERNAL_API_KEY}`,
       },
       url: externalUrl,
     });

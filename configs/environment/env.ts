@@ -17,7 +17,7 @@ if (result.error) {
 const envSchema = z.object({
   DOLLAR_OBJECTID: z.string(),
   EXTERNAL_API: z.string(),
-  API_EXTERNAL_KEY: z.string(),
+  EXTERNAL_API_KEY: z.string(),
   IMAGE_DOLLAR_PATH: z.string().default("./assets/images/dollar.jpg"),
   MONGODB_URI: z.string(),
   PHRASES_OBJECTID: z.string(),
@@ -36,7 +36,7 @@ const env = envSchema.parse(process.env, {
 export const {
   DOLLAR_OBJECTID,
   EXTERNAL_API,
-  API_EXTERNAL_KEY,
+  EXTERNAL_API_KEY,
   IMAGE_DOLLAR_PATH,
   MONGODB_URI,
   PHRASES_OBJECTID,
