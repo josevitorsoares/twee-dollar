@@ -17,6 +17,7 @@ if (result.error) {
 const envSchema = z.object({
   DOLLAR_OBJECTID: z.string(),
   EXTERNAL_API: z.string(),
+  API_EXTERNAL_KEY: z.string(),
   IMAGE_DOLLAR_PATH: z.string().default("./assets/images/dollar.jpg"),
   MONGODB_URI: z.string(),
   PHRASES_OBJECTID: z.string(),
@@ -32,9 +33,10 @@ const env = envSchema.parse(process.env, {
   }),
 });
 
-const {
+export const {
   DOLLAR_OBJECTID,
   EXTERNAL_API,
+  API_EXTERNAL_KEY,
   IMAGE_DOLLAR_PATH,
   MONGODB_URI,
   PHRASES_OBJECTID,
@@ -43,15 +45,3 @@ const {
   TWITTER_APP_KEY,
   TWITTER_APP_SECRET,
 } = env;
-
-export {
-  DOLLAR_OBJECTID,
-  EXTERNAL_API,
-  IMAGE_DOLLAR_PATH,
-  MONGODB_URI,
-  PHRASES_OBJECTID,
-  TWITTER_ACCESS_SECRET,
-  TWITTER_ACCESS_TOKEN,
-  TWITTER_APP_KEY,
-  TWITTER_APP_SECRET,
-};
