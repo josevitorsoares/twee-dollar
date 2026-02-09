@@ -1,4 +1,5 @@
 import {
+  API_EXTERNAL_KEY,
   DOLLAR_OBJECTID,
   EXTERNAL_API,
   PHRASES_OBJECTID,
@@ -19,7 +20,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
     private readonly _httpClientService: IHttpClientService,
     private readonly _dollarRepository: IDollarRepository,
     private readonly _twitterRepository: ITwitterRepository,
-    private readonly _phraseRepository: IPhraseRepository
+    private readonly _phraseRepository: IPhraseRepository,
   ) {}
 
   private _getAleatoryMessage(
@@ -30,7 +31,7 @@ export class GetDollarUseCase implements IGetDollarUseCase {
       time: string;
       change: string;
       percent: string;
-    }
+    },
   ): string {
     const { change, dollarStatus, percent, price, time } = dollar;
 
@@ -60,9 +61,15 @@ export class GetDollarUseCase implements IGetDollarUseCase {
   }
 
   async execute(): Promise<void> {
+    const externalUrl = `${EXTERNAL_API}?token=${API_EXTERNAL_KEY}`;
+
     const response = await this._httpClientService.request<DollarEntity>({
       method: "get",
-      url: EXTERNAL_API,
+      hearers: {
+        "Content-Type": "application/json",
+        "x-api-key": `${API_EXTERNAL_KEY}`,
+      },
+      url: externalUrl,
     });
 
     const coin = CoinMapper.toDomain(response.body);
@@ -161,8 +168,8 @@ export class GetDollarUseCase implements IGetDollarUseCase {
     const date = new Date();
     console.log(
       `Executado às: ${date.toLocaleTimeString(
-        "pt-BR"
-      )} em ${date.toLocaleDateString("pt-BR")}`
+        "pt-BR",
+      )} em ${date.toLocaleDateString("pt-BR")}`,
     );
   }
 }
