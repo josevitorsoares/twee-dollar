@@ -1,7 +1,11 @@
-
 # 💵 TweeDollar
 
+> [!WARNING]
+> **Este projeto foi descontinuado.**
+> A partir de março de 2026, o plano gratuito (_free tier_) da API/SDK do X (Twitter) foi encerrado. Como o TweeDollar era um projeto pessoal e de estudos, sem fins lucrativos, não é viável arcar com os custos da API paga. Por esse motivo, o bot foi oficialmente descontinuado e não receberá mais atualizações. O repositório permanecerá público como referência.
+
 <div align="center">
+  <img src="https://img.shields.io/badge/Status-Descontinuado-red?style=for-the-badge" alt="Descontinuado"/>
   <img src="https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"/>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
   <img src="https://img.shields.io/badge/License-Apache_2.0-D22128?style=for-the-badge&logo=apache&logoColor=white" alt="License"/>
@@ -160,7 +164,7 @@ O bot verificará periodicamente a cotação do dólar e postará atualizações
 
 ## 🤝 Contribuindo
 
-Contribuições são super bem-vindas!  
+Contribuições são super bem-vindas!
 Se quiser reportar um bug, sugerir uma melhoria ou abrir um pull request, é só seguir os passos:
 
 1. Faça um fork do repositório
@@ -186,6 +190,16 @@ Este projeto segue as convenções de [Conventional Commits](https://www.convent
 ## 📄 Licença
 
 Este projeto está licenciado sob a [Licença Apache 2.0](https://github.com/josevitorsoares/twee-dollar/blob/main/LICENSE). 📝
+
+---
+
+## ⚠️ Descontinuação
+
+O TweeDollar foi descontinuado em março de 2026.
+
+O motivo principal foi o encerramento do plano gratuito da API/SDK do X (Twitter). Anteriormente, era possível utilizar a API para publicar tweets sem custo, o que viabilizava o funcionamento do bot. Com a remoção do _free tier_, qualquer acesso à API passou a exigir uma assinatura paga, inviabilizando a manutenção de um projeto pessoal e sem fins lucrativos como este.
+
+O repositório permanecerá público para que possa servir de referência e aprendizado para quem tiver interesse na arquitetura, no uso da AwesomeAPI ou na estrutura do projeto.
 
 ---
 
